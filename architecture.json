@@ -1,0 +1,169 @@
+{
+  "components": [
+    {
+      "name": "React Frontend",
+      "type": "frontend",
+      "technologies": [
+        "React 18",
+        "TypeScript",
+        "Redux",
+        "Tailwind CSS"
+      ],
+      "port": 3000,
+      "description": "Веб-интерфейс пользователя"
+    },
+    {
+      "name": "FastAPI Backend",
+      "type": "backend",
+      "technologies": [
+        "FastAPI",
+        "Python 3.11",
+        "Pydantic",
+        "SQLAlchemy"
+      ],
+      "port": 8000,
+      "description": "REST API сервер"
+    },
+    {
+      "name": "PostgreSQL",
+      "type": "database",
+      "technologies": [
+        "PostgreSQL 15",
+        "Alembic migrations"
+      ],
+      "port": 5432,
+      "description": "Основная база данных"
+    },
+    {
+      "name": "Redis",
+      "type": "cache",
+      "technologies": [
+        "Redis 7",
+        "Caching",
+        "Session storage"
+      ],
+      "port": 6379,
+      "description": "Кэширование и сессии"
+    },
+    {
+      "name": "Celery Worker",
+      "type": "worker",
+      "technologies": [
+        "Celery",
+        "Background tasks",
+        "File processing"
+      ],
+      "port": null,
+      "description": "Фоновые задачи"
+    },
+    {
+      "name": "Celery Beat",
+      "type": "scheduler",
+      "technologies": [
+        "Celery Beat",
+        "Cron jobs",
+        "Scheduled tasks"
+      ],
+      "port": null,
+      "description": "Планировщик задач"
+    },
+    {
+      "name": "Nginx",
+      "type": "proxy",
+      "technologies": [
+        "Nginx",
+        "Load balancer",
+        "Static files"
+      ],
+      "port": 80,
+      "description": "Reverse proxy"
+    },
+    {
+      "name": "Flower",
+      "type": "monitoring",
+      "technologies": [
+        "Flower",
+        "Celery monitoring",
+        "Real-time"
+      ],
+      "port": 5555,
+      "description": "Мониторинг очередей"
+    }
+  ],
+  "connections": [
+    {
+      "from": "React Frontend",
+      "to": "Nginx",
+      "type": "HTTP"
+    },
+    {
+      "from": "Nginx",
+      "to": "FastAPI Backend",
+      "type": "HTTP"
+    },
+    {
+      "from": "FastAPI Backend",
+      "to": "PostgreSQL",
+      "type": "SQL"
+    },
+    {
+      "from": "FastAPI Backend",
+      "to": "Redis",
+      "type": "Cache"
+    },
+    {
+      "from": "Celery Worker",
+      "to": "Redis",
+      "type": "Queue"
+    },
+    {
+      "from": "Celery Worker",
+      "to": "PostgreSQL",
+      "type": "SQL"
+    },
+    {
+      "from": "Celery Beat",
+      "to": "Redis",
+      "type": "Schedule"
+    },
+    {
+      "from": "Flower",
+      "to": "Redis",
+      "type": "Monitor"
+    }
+  ],
+  "layers": [
+    {
+      "name": "Presentation Layer",
+      "components": [
+        "React Frontend",
+        "Nginx"
+      ],
+      "color": "#3B82F6"
+    },
+    {
+      "name": "Application Layer",
+      "components": [
+        "FastAPI Backend",
+        "Celery Worker",
+        "Celery Beat"
+      ],
+      "color": "#10B981"
+    },
+    {
+      "name": "Data Layer",
+      "components": [
+        "PostgreSQL",
+        "Redis"
+      ],
+      "color": "#F59E0B"
+    },
+    {
+      "name": "Monitoring Layer",
+      "components": [
+        "Flower"
+      ],
+      "color": "#EF4444"
+    }
+  ]
+}
