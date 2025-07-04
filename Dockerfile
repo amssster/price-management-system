@@ -4,7 +4,8 @@
 FROM node:18-alpine AS frontend-build
 WORKDIR /app/frontend
 COPY frontend/package*.json ./
-RUN npm ci --only=production
+# production install: если нет package-lock.json, используем npm install
+RUN npm install --only=production
 COPY frontend/ .
 RUN npm run build
 
